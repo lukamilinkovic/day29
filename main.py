@@ -22,6 +22,17 @@ def generate_password():
     password_entry.insert(0, password)
     pyperclip.copy(password)
 
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+
+def search():
+    website = website_entry.get()
+    with open("data.json") as data_file:
+        data = json.load(data_file)
+        if website in data:
+            message=f"Email: {data[website]['email']}\nPassword: {data[website]['password']}"
+            messagebox.showinfo(title=f"{website}", message=message)
+
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def save():
@@ -84,20 +95,22 @@ password_label = Label(text="Password:")
 password_label.grid(column=0, row=3)
 
 #Entries
-website_entry = Entry(width=45)
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry = Entry(width=33)
+website_entry.grid(row=1, column=1)
 website_entry.focus()
-email_username_entry = Entry(width=45)
+email_username_entry = Entry(width=53)
 email_username_entry.grid(column=1, row=2, columnspan=2)
 email_username_entry.insert(END, "luka.milinkovic789@gmail.com")
-password_entry = Entry(width=26)
+password_entry = Entry(width=33)
 password_entry.grid(column=1, row=3)
 
 #Buttons
 generate_password_button = Button(text="Generate Password", width=15, command=generate_password)
 generate_password_button.grid(row=3, column=2)
-add_button = Button(text="Add", width=39, command=save)
+add_button = Button(text="Add", width=44, command=save)
 add_button.grid(row=4, column=1, columnspan=2)
+search_button = Button(text="Search", width=15, command=search)
+search_button.grid(row=1, column=2)
 
 
 window.mainloop()
